@@ -3,7 +3,7 @@ function downloadCSV(data) {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "data.csv");
+    link.setAttribute("download", "DHT-to-gsheets.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -16,19 +16,14 @@ function flaker(snowflake) {
 }
 let countArray = []
 countArray.push(["Username", "UserId", "Message", "Timestamp"])
-let newestMessage = null
-let oldestMessage = null
 
 function handleFileSelect(event) {
-    newestMessage = flaker(document.getElementById("newestMessage").value)
-    oldestMessage = flaker(document.getElementById("oldestMessage").value)
-    console.log(newestMessage, oldestMessage)
+    const MAX = flaker(document.getElementById("MAX").value)
+    const MIN = flaker(document.getElementById("MIN").value)
     const file = event.target.files;
     const reader = new FileReader();
     reader.onload = function(event) {
       const contents = JSON.parse(event.target.result);
-      //console.log(Object.keys(contents["data"]["793401861293604904"]))
-      //console.log(contents["data"]["793401861293604904"]["1102816440005967922"])
 
       let count = contents["data"]["793401861293604904"]
       let countKeys = Object.keys(count)
@@ -36,8 +31,7 @@ function handleFileSelect(event) {
       countKeys.forEach((key)=> {
 
         let timez = count[key]["t"]
-        console.log(timez, newestMessage, oldestMessage)
-        if (timez <= newestMessage && timez >= oldestMessage) {
+        if (timez <= MAX && timez >= MIN) {
             console.log("passed")
 
             let currentCountArray = []
