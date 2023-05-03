@@ -1,4 +1,5 @@
 function downloadCSV(data) {
+    console.log(data)
     const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -15,7 +16,7 @@ function flaker(snowflake) {
     return (Number(flaked) + 1420070400000)
 }
 let countArray = []
-countArray.push(["Username", "UserId", "Message", "Timestamp"])
+countArray.push(["Username", "UserId", "Message", "MessageRaw", "Timestamp"])
 
 function handleFileSelect(event) {
     const MAX = flaker(document.getElementById("MAX").value)
@@ -32,15 +33,21 @@ function handleFileSelect(event) {
 
         let timez = count[key]["t"]
         if (timez <= MAX && timez >= MIN) {
-            console.log("passed")
 
             let currentCountArray = []
             currentCountArray.push(contents["meta"]["users"][contents["meta"]["userindex"][count[key]["u"]]]["name"])
             currentCountArray.push(contents["meta"]["userindex"][count[key]["u"]])
 
             if (count[key]["m"].length >= 6) {
-                currentCountArray.push(count[key]["m"].slice(0, 6))
+                if (/^[0-9]{6}$/.test(count[key]["m"].slice(0, 6))) {
+                    currentCountArray.push(count[key]["m"].slice(0, 6))
+                } else {
+                    currentCountArray.push(000000)
+                }
+            } else {
+                currentCountArray.push(000000)
             }
+            currentCountArray.push(`"${count[key]["m"]}"`)
             currentCountArray.push(timez)
             
             countArray.push(currentCountArray)
