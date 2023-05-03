@@ -1,6 +1,16 @@
 function downloadCSV(data) {
-    console.log(data)
+    //console.log(data)
     const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
+    csvContent.replace(/#/g, "")
+    let span = document.createElement("span");
+    span.textContent = "click me to copy the csv to your clickboard";
+    span.style.cursor = "pointer";
+    span.addEventListener("click", () => {
+        navigator.clipboard.writeText(csvContent);
+        alert("CSV copied to clipboard!");
+    });
+document.body.appendChild(span)
+    console.log(csvContent)
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -10,15 +20,33 @@ function downloadCSV(data) {
     document.body.removeChild(link);
 }
 
+/*
+function downloadCSV(data) {
+    //console.log(data)
+    const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
+    csvContent.replace(/#/g, "")
+    console.log(csvContent)
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "DHT-to-gsheets.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+*/
+
 function flaker(snowflake) {
     let bigId = BigInt(snowflake)
     let flaked = (bigId >> 22n)
     return (Number(flaked) + 1420070400000)
 }
 let countArray = []
-countArray.push(["Username", "UserId", "Message", "MessageRaw", "Timestamp"])
 
 function handleFileSelect(event) {
+    countArray = []
+    countArray.push(["Username", "UserId", "Message", "MessageRaw", "Timestamp"])
+
     const MAX = flaker(document.getElementById("MAX").value)
     const MIN = flaker(document.getElementById("MIN").value)
     const file = event.target.files;
@@ -28,7 +56,8 @@ function handleFileSelect(event) {
 
       let count = contents["data"]["793401861293604904"]
       let countKeys = Object.keys(count)
-      
+      countKeys.sort((a, b) => parseInt(a) - parseInt(b));
+      console.log(countKeys)
       countKeys.forEach((key)=> {
 
         let timez = count[key]["t"]
@@ -49,7 +78,6 @@ function handleFileSelect(event) {
             }
             currentCountArray.push(`"${count[key]["m"]}"`)
             currentCountArray.push(timez)
-            
             countArray.push(currentCountArray)
         }
       })
@@ -59,3 +87,6 @@ function handleFileSelect(event) {
 }
 
 document.getElementById("file-input").addEventListener("change", handleFileSelect);
+document.getElementById("trigger-button").addEventListener("click", () => {
+    handleFileSelect({ target: { files: document.getElementById("file-input").files } })
+});

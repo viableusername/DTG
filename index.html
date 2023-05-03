@@ -23,13 +23,23 @@
   </head>
   <body>
     <h2>D->G V1.1.0</h2>
-    <p>MAX and MIN take a message ID as input<br>you need the ids of the oldest message and the newest message in the range of messages you want to save<br>MAX: newest message<br>MIN: oldest message<br>once these 2 parameters are set you can input your DHT.txt file (browse button), you will get a csv file in your downloads shortly after uploading your DHT file</p>
+    <p>MAX and MIN take a message ID as input<br>you need the ids of the oldest message and the newest message in the range of messages you want to save<br>MAX: newest message<br>MIN: oldest message<br>once these 2 parameters are set you can input your DHT.txt file (browse button)<br>there is currently a problem with the download process so you'll need to do the following:</p>
+    <ol>
+      <li>input your file or press the process button if you've already added your file but nothing happened</li>
+      <li>click the text below MAX/MIN that's begging to be clicked</li>
+      <li>open the "DHT-to-gsheets.csv" that was just downloaded</li>
+      <li>ctrl+a (select all)</li>
+      <li>ctrl+v (paste)</li>
+      <li>save the changes and you can now import the file to gsheets</li>
+    </ol>
     <label for="MAX">MAX:</label>
     <input type="text" id="MAX">
     <label for="MIN">MIN:</label>
     <input type="text" id="MIN">
     <label for=""file-input>DHT file:</label>
     <input type="file" id="file-input">
+    <button id="trigger-button">process file</button>
     <script src="maine.js"></script>
+    <br>
   </body>
 </html>
