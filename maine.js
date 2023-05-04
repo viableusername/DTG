@@ -1,3 +1,4 @@
+/*
 function downloadCSV(data) {
     const csvContent = data.map(row => row.join(",")).join("\n");
     let copysv = csvContent
@@ -19,13 +20,11 @@ document.body.appendChild(span)
     link.click();
     document.body.removeChild(link);
 }
+*/
 
-/*
+
 function downloadCSV(data) {
-    //console.log(data)
     const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
-    csvContent.replace(/#/g, "")
-    console.log(csvContent)
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -34,7 +33,7 @@ function downloadCSV(data) {
     link.click();
     document.body.removeChild(link);
 }
-*/
+
 
 function flaker(snowflake) {
     let bigId = BigInt(snowflake)
@@ -76,7 +75,17 @@ function handleFileSelect(event) {
             } else {
                 currentCountArray.push(000000)
             }
-            currentCountArray.push(`"${count[key]["m"]}"`)
+            if (!count[key]["m"].includes("#")) {
+                currentCountArray.push(`"${count[key]["m"]}"`)
+            } else {
+                if (count[key]["m"].length >= 6) {
+                    if (/^[0-9]{6}$/.test(count[key]["m"].slice(0, 6))) {
+                        currentCountArray.push(count[key]["m"].slice(0, 6))
+                    } else {
+                        currentCountArray.push(000000)
+                    }
+                }
+            }
             currentCountArray.push(timez)
             countArray.push(currentCountArray)
         }
