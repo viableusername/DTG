@@ -75,8 +75,12 @@ function handleFileSelect(event) {
             } else {
                 currentCountArray.push(000000)
             }
+            
+            currentCountArray.push(`"${count[key]["m"].replace(/["`',#]/g, "")}"`)
+
+            /*
             if (!count[key]["m"].includes("#")) {
-                currentCountArray.push(`"${count[key]["m"]}"`)
+                currentCountArray.push(`"${count[key]["m"].replace(/["`',#]/g, "")}"`)
             } else {
                 if (count[key]["m"].length >= 6) {
                     if (/^[0-9]{6}$/.test(count[key]["m"].slice(0, 6))) {
@@ -85,7 +89,7 @@ function handleFileSelect(event) {
                         currentCountArray.push(000000)
                     }
                 }
-            }
+            }*/
             currentCountArray.push(timez)
             countArray.push(currentCountArray)
         }
