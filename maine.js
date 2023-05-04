@@ -75,7 +75,7 @@ function handleFileSelect(event) {
             } else {
                 currentCountArray.push(000000)
             }
-            
+
             currentCountArray.push(`"${count[key]["m"].replace(/["`',#]/g, "")}"`)
 
             /*
@@ -89,7 +89,8 @@ function handleFileSelect(event) {
                         currentCountArray.push(000000)
                     }
                 }
-            }*/
+            }
+            */
             currentCountArray.push(timez)
             countArray.push(currentCountArray)
         }
