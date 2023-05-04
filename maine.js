@@ -1,7 +1,6 @@
 function downloadCSV(data) {
-    //console.log(data)
-    const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
-    csvContent.replace(/#/g, "")
+    const csvContent = data.map(row => row.join(",")).join("\n");
+    console.log(csvContent)
     let span = document.createElement("span");
     span.textContent = "click me to copy the csv to your clickboard";
     span.style.cursor = "pointer";
@@ -11,7 +10,7 @@ function downloadCSV(data) {
     });
 document.body.appendChild(span)
     console.log(csvContent)
-    const encodedUri = encodeURI(csvContent);
+    const encodedUri = "data:text/csv;charset=utf-8" + encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", "DHT-to-gsheets.csv");
