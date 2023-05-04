@@ -1,11 +1,12 @@
 function downloadCSV(data) {
     const csvContent = data.map(row => row.join(",")).join("\n");
+    let copysv = csvContent
     console.log(csvContent)
     let span = document.createElement("span");
     span.textContent = "click me to copy the csv to your clickboard";
     span.style.cursor = "pointer";
     span.addEventListener("click", () => {
-        navigator.clipboard.writeText(csvContent);
+        navigator.clipboard.writeText(copysv);
         alert("CSV copied to clipboard!");
     });
 document.body.appendChild(span)
