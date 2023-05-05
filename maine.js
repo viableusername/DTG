@@ -65,15 +65,16 @@ function handleFileSelect(event) {
             let currentCountArray = []
             currentCountArray.push(contents["meta"]["users"][contents["meta"]["userindex"][count[key]["u"]]]["name"])
             currentCountArray.push(contents["meta"]["userindex"][count[key]["u"]])
-
-            if (count[key]["m"].length >= 6) {
-                if (/^[0-9]{6}$/.test(count[key]["m"].slice(0, 6))) {
-                    currentCountArray.push(count[key]["m"].slice(0, 6))
+            if (count[key]["m"] != undefined) {
+                if (count[key]["m"].length >= 6) {
+                    if (/^[0-9]{6}$/.test(count[key]["m"].slice(0, 6))) {
+                        currentCountArray.push(count[key]["m"].slice(0, 6))
+                    } else {
+                        currentCountArray.push(000000)
+                    }
                 } else {
                     currentCountArray.push(000000)
                 }
-            } else {
-                currentCountArray.push(000000)
             }
 
             currentCountArray.push(`"${count[key]["m"].replace(/["`',#]/g, "")}"`)
