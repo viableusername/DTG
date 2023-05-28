@@ -1,4 +1,4 @@
-console.log("V1.2.0")
+console.log("V1.2.1")
 function downloadCSV(data) {
     const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -10,9 +10,16 @@ function downloadCSV(data) {
     document.body.removeChild(link);
 }
 
+function sanitizeReg (reg) {
+    return new RegExp(`[${reg}]`, 'g')
+}
+
+let illegalCharacters = `"\`',#`
+let illegalReg = sanitizeReg(illegalCharacters);
+
 // @param {string} raw
 function sanitize(raw) {
-    return `"${raw.replace(/["`',#]/g, "")}"`
+    return `"${raw.replace(illegalReg, "")}"`
 }
 
 function flaker(snowflake) {
@@ -307,12 +314,23 @@ function regexMode(event) {
 
 
 //document.getElementById("file-input").addEventListener("change", handleFileSelect);
-document.getElementById("trigger-button").addEventListener("click", () => {
-    normalMode({ target: { files: document.getElementById("file-input").files } })
-});
-document.getElementById("wrong-button").addEventListener("click", () => {
-    wrongMode({ target: { files: document.getElementById("file-input").files } })
-});
-document.getElementById("regex-button").addEventListener("click", () => {
-    regexMode({ target: { files: document.getElementById("file-input").files } })
-});
+
+window.addEventListener("load", () => {
+    document.getElementById("trigger-button").addEventListener("click", () => {
+        normalMode({ target: { files: document.getElementById("file-input").files } })
+    });
+    document.getElementById("wrong-button").addEventListener("click", () => {
+        wrongMode({ target: { files: document.getElementById("file-input").files } })
+    });
+    document.getElementById("regex-button").addEventListener("click", () => {
+        regexMode({ target: { files: document.getElementById("file-input").files } })
+    });
+
+    document.getElementById("illegal-input").value = illegalCharacters
+    document.getElementById("illegal-input").addEventListener("change", event => {
+        illegalCharacters = event.target.value.replaceAll('"', '\"').replace(/\\/g, "\\\\")
+        illegalReg = sanitizeReg(illegalCharacters)
+        console.log(illegalReg)
+    })
+    
+})

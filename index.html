@@ -11,8 +11,8 @@
     <meta property="og:description" content="turn DHT files into CSVs" />
     <link href="styles/style.css" rel="stylesheet" />
   </head>
-  <body>
-    <h1>D->G V1.2.0</h1>
+  <>
+    <h1>D->G V1.2.1</h1>
     <hr>
     <p id="main-p">MAX and MIN take a message ID as input<br>you need the ids of the oldest message and the newest message in the range of messages you want to save<br>MAX: newest message<br>MIN: oldest message<br>once these 2 parameters are set you can input your DHT.txt file, you'll get a CSV in your downloads shortly after uploading your file</p>
     <label for="MAX">MAX:</label>
@@ -24,11 +24,12 @@
     <input type="file" id="file-input">
     <label for="include-header">include header:</label>
     <input type="checkbox" id="include-header" checked>
-    
     <hr>
     <h3><u>Normal Mode</u></h3>
-    <p>the default mode, use this if you're not trying to find wrong counts or messages that match a regular expression</p>
+    <p>the default mode, use this if you're not trying to find wrong counts or messages that match a regular expression<br></p>
     <button id="trigger-button">process file</button>
+    <label for="illegalInput">banned characters:</label>
+    <input type="text" id="illegal-input" value="">
     <hr>
     <h3><u>!WRONG Mode</u></h3>
     <p>this will create a CSV of all incorrect counts within the selected range (only works for counts 100,000 to 999,999)</p>
