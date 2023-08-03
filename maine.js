@@ -1,4 +1,4 @@
-console.log("V1.2.1")
+console.log("V1.2.2")
 function downloadCSV(data) {
     const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -42,8 +42,9 @@ function normalMode(event) {
     const reader = new FileReader();
     reader.onload = function(event) {
       const contents = JSON.parse(event.target.result);
-
-      let count = contents["data"]["793401861293604904"]
+      
+      let guildList = Object.keys(contents["data"])
+      let count = contents["data"][guildList[0]]
       let countKeys = Object.keys(count)
       countKeys.sort((a, b) => parseInt(a) - parseInt(b));
       console.log(countKeys)
@@ -108,8 +109,9 @@ function wrongMode(event) {
     reader.onload = function(event) {
         const contents = JSON.parse(event.target.result);
 
-        let count = contents["data"]["793401861293604904"];
-        let countKeys = Object.keys(count);
+        let guildList = Object.keys(contents["data"])
+        let count = contents["data"][guildList[0]]
+        let countKeys = Object.keys(count)
         countKeys.sort((a, b) => parseInt(a) - parseInt(b));
         console.log(countKeys);
         let currentNum = null;
@@ -253,7 +255,8 @@ function regexMode(event) {
     reader.onload = function(event) {
       const contents = JSON.parse(event.target.result);
 
-      let count = contents["data"]["793401861293604904"]
+      let guildList = Object.keys(contents["data"])
+      let count = contents["data"][guildList[0]]
       let countKeys = Object.keys(count)
       countKeys.sort((a, b) => parseInt(a) - parseInt(b));
       console.log(countKeys)
